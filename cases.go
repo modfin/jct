@@ -10,8 +10,7 @@ type Case interface {
 	Join(words []string) (key string)
 }
 
-
-type delCase struct{
+type delCase struct {
 	Delimiter string
 }
 
@@ -22,18 +21,17 @@ func (d delCase) Join(words []string) string {
 	return strings.Join(words, d.Delimiter)
 }
 
-func SnakeCase() Case{
+func SnakeCase() Case {
 	return delCase{"_"}
 }
-func KebabCase() Case{
+func KebabCase() Case {
 	return delCase{"-"}
 }
-func DotCase() Case{
+func DotCase() Case {
 	return delCase{"."}
 }
 
-
-func PascalCase() Case{
+func PascalCase() Case {
 	return pascalCase{}
 }
 
@@ -57,15 +55,15 @@ func (pascalCase) Split(key string) (words []string) {
 			next = rkey[i+1]
 		}
 
-		curIsUpper :=  unicode.IsUpper(r)
+		curIsUpper := unicode.IsUpper(r)
 		nextIsUpper := unicode.IsUpper(next)
 
-		if len(buff) > 0 && curIsUpper{
-			if !lastWasUpper{
+		if len(buff) > 0 && curIsUpper {
+			if !lastWasUpper {
 				split = true
-			}else if lastWasUpper && isLast{
+			} else if lastWasUpper && isLast {
 				split = false
-			}else if lastWasUpper && !nextIsUpper{
+			} else if lastWasUpper && !nextIsUpper {
 				split = true
 			}
 		}
@@ -94,11 +92,11 @@ func (pascalCase) Join(words []string) string {
 	return string(buff)
 }
 
-func CamelCase() Case{
+func CamelCase() Case {
 	return camelCase{}
 }
 
-type camelCase struct{
+type camelCase struct {
 	pascalCase
 }
 
@@ -108,7 +106,6 @@ func (c camelCase) Join(words []string) string {
 	if unicode.IsUpper(key[0]) {
 		key[0] = unicode.ToLower(key[0])
 	}
-
 
 	return string(key)
 }

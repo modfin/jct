@@ -1,9 +1,6 @@
 package jct
+
 import "encoding/json"
-
-
-
-
 
 func Toggle(j json.RawMessage, from, to Case) (msg json.RawMessage, err error) {
 
@@ -34,14 +31,14 @@ func toggle(data interface{}, from, to Case) (err error) {
 			delete(typed, k)
 			typed[fixed] = v
 			err = toggle(v, from, to)
-			if err != nil{
+			if err != nil {
 				return err
 			}
 		}
 	case []interface{}:
 		for _, v := range typed {
 			err = toggle(v, from, to)
-			if err != nil{
+			if err != nil {
 				return err
 			}
 		}
@@ -51,9 +48,6 @@ func toggle(data interface{}, from, to Case) (err error) {
 	return nil
 }
 
-
-
-
-func fixKey(key string, from Case, to Case) string{
+func fixKey(key string, from Case, to Case) string {
 	return to.Join(from.Split(key))
 }
