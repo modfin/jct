@@ -26,8 +26,10 @@ fmt.Pringln(string(j))
 ```
 
 
-## Restriction 
+## Restrictions
 Camel and Pascal case contains more information then delimitede cases such as kebab 
-or snake case. Camel case contain information about abbreviations which del delimitede cases does not.
+or snake case. Camel case contain information about abbreviations which delimitede cases does not.
 eg `URLName -> url_name` and the reverse `url_name -> UrlName`
+
+In this sence information is destoyed when converting from Camel or Pascal case to a delimitede case.
 
