@@ -10,7 +10,7 @@ eg.
 ```go
 j := []byte(`{"ToggleCase": 1})`
 j := jsc.Toggle(j, jct.PascalCase(), jsc.SnakeCase()))
-fmt.Pringln(string(j))
+fmt.Println(string(j))
 // {"toggle_case": 1}
 
 ```
@@ -20,7 +20,7 @@ or
 ```go
 j := []byte(`{"some-thing": ["else", {"but-is": "needed"}]})`
 j := jsc.Toggle(j, jct.KebabCase(), jsc.CamelCase()))
-fmt.Pringln(string(j))
+fmt.Println(string(j))
 // {"someThing": ["else", {"butIs": "needed"}]}
 
 ```
