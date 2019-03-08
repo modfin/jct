@@ -1,6 +1,6 @@
 
 
-# Json Case Toggle
+# JSON Case Toggle
 
 A simple tool for toggling different cases in json data.
 
