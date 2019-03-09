@@ -2,10 +2,11 @@ package jct
 
 import "encoding/json"
 
-func Toggle(j json.RawMessage, from, to Case) (msg json.RawMessage, err error) {
+func Toggle(j []byte, from, to Case) ([]byte, error) {
 
 	var data interface{}
-	if err := json.Unmarshal([]byte(j), &data); err != nil {
+	err := json.Unmarshal(j, &data)
+	if err != nil {
 		return nil, err
 	}
 
@@ -14,12 +15,7 @@ func Toggle(j json.RawMessage, from, to Case) (msg json.RawMessage, err error) {
 		return nil, err
 	}
 
-	b, err := json.Marshal(data)
-	if err != nil {
-		return nil, err
-	}
-
-	return json.RawMessage(b), nil
+	return json.Marshal(data)
 }
 
 func toggle(data interface{}, from, to Case) (err error) {
@@ -42,7 +38,6 @@ func toggle(data interface{}, from, to Case) (err error) {
 				return err
 			}
 		}
-
 	}
 
 	return nil

@@ -10,25 +10,25 @@ type Case interface {
 	Join(words []string) (key string)
 }
 
-type delCase struct {
+type DelCase struct {
 	Delimiter string
 }
 
-func (d delCase) Split(key string) []string {
+func (d DelCase) Split(key string) []string {
 	return strings.Split(strings.ToLower(key), d.Delimiter)
 }
-func (d delCase) Join(words []string) string {
+func (d DelCase) Join(words []string) string {
 	return strings.Join(words, d.Delimiter)
 }
 
 func SnakeCase() Case {
-	return delCase{"_"}
+	return DelCase{"_"}
 }
 func KebabCase() Case {
-	return delCase{"-"}
+	return DelCase{"-"}
 }
 func DotCase() Case {
-	return delCase{"."}
+	return DelCase{"."}
 }
 
 func PascalCase() Case {
