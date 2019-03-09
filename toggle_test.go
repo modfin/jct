@@ -3,7 +3,6 @@ package jct
 import (
 	"encoding/json"
 	"testing"
-	"fmt"
 )
 
 var casesToggleTable = []struct {
@@ -168,17 +167,4 @@ func BenchmarkTogglePascalToCamel(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		Toggle(j, from, to)
 	}
-}
-
-
-func aa(){
-	j := []byte(`{"ToggleCase": 1}`)
-	j := Toggle(j, PascalCase(), SnakeCase())
-	fmt.Println(string(j))
-	// {"toggle_case": 1}
-
-		j := []byte(`{"some-thing": ["else", {"but-is": "needed"}]}`)
-	j := Toggle(j, KebabCase(), CamelCase()))
-	fmt.Println(string(j))
-	// {"someThing": ["else", {"butIs": "needed"}]}
 }
