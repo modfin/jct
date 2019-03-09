@@ -1,48 +1,52 @@
 package jct
 
-import "encoding/json"
+func Toggle(in []byte, from, to Case) ([]byte) {
 
-func Toggle(j []byte, from, to Case) ([]byte, error) {
+	readString := func(start int) (end int, buf []byte) {
 
-	var data interface{}
-	err := json.Unmarshal(j, &data)
-	if err != nil {
-		return nil, err
+		var last byte
+		for i := start + 1; i < len(in); i++ {
+			end = i
+			var cur = in[i]
+			if cur == '"' && last != '\\' {
+				break
+			}
+			buf = append(buf, cur)
+			last = cur
+		}
+		return end, buf
 	}
 
-	err = toggle(data, from, to)
-	if err != nil {
-		return nil, err
-	}
+	isKey := func(start int) (iskey bool) {
 
-	return json.Marshal(data)
-}
-
-func toggle(data interface{}, from, to Case) (err error) {
-
-	switch typed := data.(type) {
-	case map[string]interface{}:
-		for k, v := range typed {
-			fixed := fixKey(k, from, to)
-			delete(typed, k)
-			typed[fixed] = v
-			err = toggle(v, from, to)
-			if err != nil {
-				return err
+		for i := start + 1; i < len(in); i++ {
+			var cur = in[i]
+			if cur != ' ' {
+				return cur == ':'
 			}
 		}
-	case []interface{}:
-		for _, v := range typed {
-			err = toggle(v, from, to)
-			if err != nil {
-				return err
-			}
-		}
+		return
 	}
 
-	return nil
-}
+	res := make([]byte, 0, len(in))
+	for i := 0; i < len(in); i++ {
+		var cur = in[i]
 
-func fixKey(key string, from Case, to Case) string {
-	return to.Join(from.Split(key))
+		res = append(res, cur)
+
+		// starting string
+		if cur == '"' {
+			end, str := readString(i)
+
+			if isKey(end) {
+				str = []byte(to.Join(from.Split(string(str))))
+			}
+
+			res = append(res, str...)
+			res = append(res, '"')
+
+			i = end
+		}
+	}
+	return res
 }

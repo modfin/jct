@@ -50,6 +50,21 @@ var casesSplitTable = []struct {
 		expected: []string{"name", "url"},
 		_case:    PascalCase(),
 	},
+	{
+		in:       "AbC",
+		expected: []string{"ab", "c"},
+		_case:    PascalCase(),
+	},
+	{
+		in:       "AbCd",
+		expected: []string{"ab", "cd"},
+		_case:    PascalCase(),
+	},
+	{
+		in:       "AB",
+		expected: []string{"ab"},
+		_case:    PascalCase(),
+	},
 }
 
 var casesJoinTable = []struct {
@@ -75,6 +90,11 @@ var casesJoinTable = []struct {
 	{
 		in:       []string{"hello", "world"},
 		expected: "HelloWorld",
+		_case:    PascalCase(),
+	},
+	{
+		in:       []string{"a", "b"},
+		expected: "AB",
 		_case:    PascalCase(),
 	},
 }

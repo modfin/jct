@@ -42,38 +42,44 @@ func (pascalCase) Split(key string) (words []string) {
 	add := func(r []rune) {
 		words = append(words, strings.ToLower(string(r)))
 	}
+
 	var buff []rune
 	rkey := []rune(key)
 	rlen := len(rkey)
 	lastWasUpper := true
-	for i, r := range rkey {
-		split := false
-		isLast := i+1 == rlen
-		var next rune
+	for i := range rkey {
+		var split bool
+		var isLast = i+1 == rlen
 
+		var cur = rkey[i]
+		var next rune
 		if !isLast {
 			next = rkey[i+1]
 		}
 
-		curIsUpper := unicode.IsUpper(r)
+		curIsUpper := unicode.IsUpper(cur)
 		nextIsUpper := unicode.IsUpper(next)
 
-		if len(buff) > 0 && curIsUpper {
+		if curIsUpper && len(buff) > 0 {
 			if !lastWasUpper {
 				split = true
-			} else if lastWasUpper && isLast {
-				split = false
-			} else if lastWasUpper && !nextIsUpper {
+				goto breakif
+			}
+			if isLast {
+				goto breakif
+			}
+			if lastWasUpper && !nextIsUpper {
 				split = true
+				goto breakif
 			}
 		}
-
+	breakif:
 		if split {
 			add(buff)
 			buff = []rune{}
 		}
-		buff = append(buff, r)
-		lastWasUpper = unicode.IsUpper(r)
+		buff = append(buff, cur)
+		lastWasUpper = curIsUpper
 	}
 	add(buff)
 

@@ -8,8 +8,8 @@ eg.
 
 
 ```go
-j := []byte(`{"ToggleCase": 1})`
-j := jct.Toggle(j, jct.PascalCase(), jct.SnakeCase()))
+j := []byte(`{"ToggleCase": 1}`)
+j := jct.Toggle(j, jct.PascalCase(), jct.SnakeCase())
 fmt.Println(string(j))
 // {"toggle_case": 1}
 
@@ -18,8 +18,8 @@ fmt.Println(string(j))
 or
 
 ```go
-j := []byte(`{"some-thing": ["else", {"but-is": "needed"}]})`
-j := jct.Toggle(j, jct.KebabCase(), jct.CamelCase()))
+j := []byte(`{"some-thing": ["else", {"but-is": "needed"}]}`)
+j := jct.Toggle(j, jct.KebabCase(), jct.CamelCase())
 fmt.Println(string(j))
 // {"someThing": ["else", {"butIs": "needed"}]}
 
