@@ -101,6 +101,36 @@ var casesToggleTable = []struct {
 		to:       CamelCase(),
 		expected: `[{"helloWorld":"{\"do-not-toggel\": [1,2, {\"a-b\": 1} ]}"}]`,
 	},
+	{
+		in:       `[{"helloWorld\\":""}]`,
+		from:     CamelCase(),
+		to:       KebabCase(),
+		expected: `[{"hello-world\\":""}]`,
+	},
+	{
+		in:       `[{"helloWorld\\":""}]`,
+		from:     CamelCase(),
+		to:       KebabCase(),
+		expected: `[{"hello-world\\":""}]`,
+	},
+	{
+		in:       `[{"hel\"loWorld\\\"":"\"\\\""}]`,
+		from:     CamelCase(),
+		to:       KebabCase(),
+		expected: `[{"hel\"lo-world\\\"":"\"\\\""}]`,
+	},
+	{
+		in:       `[{"helloWorld":"\n\"\\"}]`,
+		from:     CamelCase(),
+		to:       KebabCase(),
+		expected: `[{"hello-world":"\n\"\\"}]`,
+	},
+	{
+		in:       `[{"h\n\"\\elloWorld\\":""}]`,
+		from:     CamelCase(),
+		to:       KebabCase(),
+		expected: `[{"h\n\"\\ello-world\\":""}]`,
+	},
 }
 
 func TestToggleCases(t *testing.T) {

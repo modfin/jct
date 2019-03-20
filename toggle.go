@@ -4,15 +4,20 @@ func Toggle(in []byte, from, to Case) ([]byte) {
 
 	readString := func(start int) (end int, buf []byte) {
 
-		var last byte
 		for i := start + 1; i < len(in); i++ {
 			end = i
 			var cur = in[i]
-			if cur == '"' && last != '\\' {
+
+			if cur == '\\'{
+				i++
+				next :=  in[i]
+				buf = append(buf, cur, next)
+				continue
+			}
+			if cur == '"'{
 				break
 			}
 			buf = append(buf, cur)
-			last = cur
 		}
 		return end, buf
 	}
